@@ -2,9 +2,13 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib.font_manager as fm
 
-plt.rc("font", family = "Malgun Gothic")
-sns.set(font="Malgun Gothic", rc={"axes.unicode_minus":False}, style='white')
+font_path = 'fonts/NanumGothic.ttf'
+font_prop = fm.FontProperties(fname=font_path)
+plt.rc('font', family=font_prop.get_name())
+sns.set(font=font_prop.get_name(), rc={"axes.unicode_minus": False}, style='white')
+
 
 # 데이터 불러오기
 voting_data = pd.read_csv('vote.csv')
@@ -29,17 +33,17 @@ vote_shares = votes_per_candidate[[col + '_share' for col in candidate_columns]]
 # 시각화
 fig, axes = plt.subplots(3, 1, figsize=(10, 18))
 grouped_by_district['투표율'].sort_values().plot(kind='barh', ax=axes[0], color='skyblue')
-axes[0].set_title('Voter Turnout by District (%)')
-axes[0].set_xlabel('Turnout (%)')
+axes[0].set_title('Voter Turnout by District (%)', fontproperties=font_prop)
+axes[0].set_xlabel('Turnout (%)', fontproperties=font_prop)
 
 age_by_district['average_voting_age'].sort_values().plot(kind='barh', ax=axes[1], color='lightgreen')
-axes[1].set_title('Average Voting Age by District')
-axes[1].set_xlabel('Average Age')
+axes[1].set_title('Average Voting Age by District', fontproperties=font_prop)
+axes[1].set_xlabel('Average Age', fontproperties=font_prop)
 
 sns.heatmap(vote_shares.T, annot=True, fmt=".1f", linewidths=.5, ax=axes[2], cmap='viridis')
-axes[2].set_title('Candidate Vote Share by District (%)')
-axes[2].set_xlabel('District')
-axes[2].set_ylabel('Candidate')
+axes[2].set_title('Candidate Vote Share by District (%)', fontproperties=font_prop)
+axes[2].set_xlabel('District', fontproperties=font_prop)
+axes[2].set_ylabel('Candidate', fontproperties=font_prop)
 
 plt.tight_layout()
 
