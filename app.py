@@ -3,6 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+plt.rc("font", family = "Malgun Gothic")
+sns.set(font="Malgun Gothic", rc={"axes.unicode_minus":False}, style='white')
+
 # 데이터 불러오기
 voting_data = pd.read_csv('vote.csv')
 age_data = pd.read_csv('age.csv', encoding='utf-8')
