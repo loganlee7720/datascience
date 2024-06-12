@@ -16,7 +16,7 @@ voting_data = pd.read_csv('vote.csv')
 age_data = pd.read_csv('age.csv', encoding='utf-8')
 
 # 데이터 병합 및 처리
-merged_data = pd.merge(voting_data, age_data, left_on=['구', '읍면동명'], right_on=['시군구명', '읍면동명'], how='left')
+merged_data = pd.merge(voting_data, age_data, on=['구', '읍면동명'], how='left')
 grouped_by_district = merged_data.groupby('구').agg({'투표수': 'sum', '선거인수': 'sum'})
 grouped_by_district['투표율'] = grouped_by_district['투표수'] / grouped_by_district['선거인수'] * 100
 
@@ -38,7 +38,6 @@ fig, axes = plt.subplots(3, 1, figsize=(10, 18))
 grouped_by_district['투표율'].sort_values().plot(kind='barh', ax=axes[0], color='skyblue')
 axes[0].set_title('Voter Turnout by District (%)', fontproperties=font_prop)
 axes[0].set_xlabel('Turnout (%)', fontproperties=font_prop)
-# Y축 틱 레이블에 글꼴 적용
 axes[0].set_yticklabels(axes[0].get_yticklabels(), fontproperties=font_prop)
 
 # 두 번째 그래프: 평균 투표 연령
@@ -52,14 +51,13 @@ sns.heatmap(vote_shares.T, annot=True, fmt=".1f", linewidths=.5, ax=axes[2], cma
 axes[2].set_title('Candidate Vote Share by District (%)', fontproperties=font_prop)
 axes[2].set_xlabel('District', fontproperties=font_prop)
 axes[2].set_ylabel('Candidate', fontproperties=font_prop)
-# Seaborn heatmap의 경우, 내부적으로 틱 레이블을 조정할 필요가 있습니다
 axes[2].set_yticklabels(axes[2].get_yticklabels(), fontproperties=font_prop)
 axes[2].set_xticklabels(axes[2].get_xticklabels(), fontproperties=font_prop, rotation=45)
 
 plt.tight_layout()
-plt.show()
 
 st.title('4.7')
 st.title('서울특별시장 보궐 선거 결과 분석')
 st.write('분석 결과')
-st.pyplot(fig, axes)  # Streamlit을 통해 플롯 출력
+
+st.pyplot(fig)  # Streamlit을 통해 플롯 출력
