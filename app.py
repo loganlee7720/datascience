@@ -32,25 +32,18 @@ vote_shares = votes_per_candidate[[col + '_share' for col in candidate_columns]]
 
 # 시각화
 fig, axes = plt.subplots(3, 1, figsize=(10, 18))
-
-# 첫 번째 플롯: 투표율 by District
 grouped_by_district['투표율'].sort_values().plot(kind='barh', ax=axes[0], color='skyblue')
-axes[0].set_title('Voter Turnout by District (%)', fontproperties=font_prop)
-axes[0].set_xlabel('Turnout (%)', fontproperties=font_prop)
-axes[0].tick_params(axis='both', labelsize=12)  # X축과 Y축 텍스트 크기 조정
+axes[0].set_title('Voter Turnout by District (%)')
+axes[0].set_xlabel('Turnout (%)')
 
-# 두 번째 플롯: Average Voting Age by District
 age_by_district['average_voting_age'].sort_values().plot(kind='barh', ax=axes[1], color='lightgreen')
-axes[1].set_title('Average Voting Age by District', fontproperties=font_prop)
-axes[1].set_xlabel('Average Age', fontproperties=font_prop)
-axes[1].tick_params(axis='both', labelsize=12)
+axes[1].set_title('Average Voting Age by District')
+axes[1].set_xlabel('Average Age')
 
-# 세 번째 플롯: Candidate Vote Share by District
 sns.heatmap(vote_shares.T, annot=True, fmt=".1f", linewidths=.5, ax=axes[2], cmap='viridis')
-axes[2].set_title('Candidate Vote Share by District (%)', fontproperties=font_prop)
-axes[2].set_xlabel('District', fontproperties=font_prop)
-axes[2].set_ylabel('Candidate', fontproperties=font_prop)
-axes[2].tick_params(axis='both', labelsize=12)
+axes[2].set_title('Candidate Vote Share by District (%)')
+axes[2].set_xlabel('District')
+axes[2].set_ylabel('Candidate')
 
 plt.tight_layout()
 
